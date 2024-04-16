@@ -1,7 +1,7 @@
 # CIS436 - Project 4: Makeup Tinder!
 
 ### Notes:
-= Material Design components will be used to satisfy Jetpack requirements
+- Material Design components will be used to satisfy Jetpack requirements
 - Navigation bar for navigating between fragments
 - 3 total fragments
 - come up with a cute name for the app
