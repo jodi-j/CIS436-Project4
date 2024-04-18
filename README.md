@@ -16,7 +16,8 @@
 #### Fragment 2: Makeup Collection
 - Display all products that user has liked
 - SQLite database to hold all products that user has liked
-- Search Bar Widget (to allow user to search all products in collection
+- Search Bar Widget (to allow user to search all products in collection)
+- *OPTIONAL*: Web View Widget (to allow user to access purchase link for product directly through app)
 - *OPTIONAL*: add a rating to the product using RatingBar widget
 
 #### Fragment 3: User Profile
