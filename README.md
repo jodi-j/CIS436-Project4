@@ -5,6 +5,8 @@
 - Navigation bar for navigating between fragments
 - 3 total fragments
 - come up with a cute name for the app
+- handle app animations once all functionality is finished
+- choose color scheme
 
 ### Fragment Requirements
 #### Fragment 1: Swiping on Makeup Products
