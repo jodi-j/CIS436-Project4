@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/swipingFragment">
+
+    <fragment
+        android:id="@+id/swipingFragment"
+        android:name="com.example.cis436_project4.SwipingFragment"
+        android:label="SwipingFragment" />
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.cis436_project4.ProductsFragment"
+        android:label="ProductsFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cis436_project4.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>
