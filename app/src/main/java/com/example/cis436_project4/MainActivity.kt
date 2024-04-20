@@ -49,8 +49,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    // Call getProductData when activity starts
+    // Call getProductData when activity starts if database is empty
         GlobalScope.launch(Dispatchers.IO) {
+            RoomDatabaseProvider.getInstance(this@MainActivity).clearAllTables()
             if (isDatabaseEmpty()) {
                 getProductData()
             }
@@ -71,19 +72,6 @@ class MainActivity : AppCompatActivity() {
                 Request.Method.GET, makeupURL,
                 { response ->
                     populateDatabase(response)
-                   /* val  productArray = JSONArray(response)
-
-                    for(i in 0 until productArray.length()) {
-                        val product : JSONObject = productArray.getJSONObject(i)
-                        //store product info in class
-                        val productInfo = Product (
-                            productID = product.getString("id"),
-                            brand = product.getString("brand"),
-                            name = product.getString("name")
-                            //TODO: handling for the tags
-                        )
-                        productInfoList.add(productInfo)
-                    }*/
                 },
                 { error ->
 
@@ -106,12 +94,18 @@ class MainActivity : AppCompatActivity() {
                 val productInfo = Product(
                     productID = product.getString("id"),
                     brand = product.getString("brand"),
-                    name = product.getString("name")
+                    name = product.getString("name"),
+                    price = product.getString("price"),
+                    imageLink = product.getString("image_link"),
+                    websiteLink = product.getString("product_link"),
+                    description = product.getString("description"),
+                    type = product.getString("product_type"),
+                    tags = product.getString("tag_list")
                     // TODO: handling for the tags
                 )
                 // Insert product into database
                 insertProductIntoDatabase(productInfo)
-                //fetchDataFromDatabase()
+                fetchDataFromDatabase()
             }
         } catch (e: Exception) {
             // Handle parsing errors or other exceptions
@@ -139,7 +133,8 @@ class MainActivity : AppCompatActivity() {
 
 
     //Fetch data from the database
-    /*private fun fetchDataFromDatabase() {
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun fetchDataFromDatabase() {
         GlobalScope.launch(Dispatchers.IO) {
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val productDao = database.productDao()
@@ -152,5 +147,5 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Product ID: ${product.productID}, Brand: ${product.brand}, Name: ${product.name}")
             }
         }
-    }*/
+    }
 }

@@ -13,13 +13,13 @@ data class User (
 data class Product(
     @PrimaryKey val productID : String,
     val brand : String,
-    val name : String
-    /*val price : Double?,
+    val name : String,
+    val price : String?,
     val imageLink : String?,
     val websiteLink : String?,
     val description : String?,
     val type: String?,
-    val tags: String?*/
+    val tags: String?
 )
 
 @Entity
