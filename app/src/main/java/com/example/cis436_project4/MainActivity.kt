@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController: NavController
     private var productInfoList: MutableList<Product> = ArrayList()
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,7 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     // Call getProductData when activity starts
         GlobalScope.launch(Dispatchers.IO) {
-            getProductData()
+            if (isDatabaseEmpty()) {
+                getProductData()
+            }
         }
     }
 
@@ -107,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 // Insert product into database
                 insertProductIntoDatabase(productInfo)
-                fetchDataFromDatabase()
+                //fetchDataFromDatabase()
             }
         } catch (e: Exception) {
             // Handle parsing errors or other exceptions
@@ -116,6 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Insert product into Room Database
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertProductIntoDatabase(product: Product) {
         GlobalScope.launch(Dispatchers.IO) {
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
@@ -125,8 +130,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Check if database is empty
+    private fun isDatabaseEmpty(): Boolean {
+        val database = RoomDatabaseProvider.getInstance(this)
+        val productDao = database.productDao()
+        return productDao.getAllProducts().isEmpty()
+    }
+
+
     //Fetch data from the database
-    private fun fetchDataFromDatabase() {
+    /*private fun fetchDataFromDatabase() {
         GlobalScope.launch(Dispatchers.IO) {
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val productDao = database.productDao()
@@ -139,5 +152,5 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Product ID: ${product.productID}, Brand: ${product.brand}, Name: ${product.name}")
             }
         }
-    }
+    }*/
 }
