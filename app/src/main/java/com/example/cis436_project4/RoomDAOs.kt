@@ -20,7 +20,7 @@ interface ProductDao {
     @Query("SELECT * FROM Product")
     fun getAllProducts(): List<Product>
 
-    // SELECT all products in user's bag
+    // SELECT all products in user's collection
     @Query("SELECT p.productID, p.name, p.brand " +
             "FROM Product p " +
             "JOIN UserCollection uc ON p.productID = uc.productID " +

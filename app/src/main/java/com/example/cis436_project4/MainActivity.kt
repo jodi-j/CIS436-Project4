@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     // Call getProductData when activity starts if database is empty
         GlobalScope.launch(Dispatchers.IO) {
-            RoomDatabaseProvider.getInstance(this@MainActivity).clearAllTables()
+            //RoomDatabaseProvider.getInstance(this@MainActivity).clearAllTables()
             if (isDatabaseEmpty()) {
                 getProductData()
             }
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
 
             // Log the fetched products
             for (product in products) {
-                Log.d("MainActivity", "Product ID: ${product.productID}, Brand: ${product.brand}, Name: ${product.name}")
+                Log.d("MainActivity", "Product ID: ${product.productID}, ${product.imageLink} ")
             }
         }
     }

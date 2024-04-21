@@ -49,9 +49,11 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("com.android.volley:volley:1.2.1")
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     annotationProcessor("androidx.room:room-compiler:2.6.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
     kapt("androidx.room:room-compiler:2.6.1")
 }
