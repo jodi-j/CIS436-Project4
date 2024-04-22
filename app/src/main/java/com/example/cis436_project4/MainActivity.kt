@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController: NavController
+    private var productInfoList: MutableList<Product> = ArrayList()
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -211,7 +212,7 @@ class MainActivity : AppCompatActivity() {
 
             // Log the fetched products
             for (product in products) {
-                Log.d("MainActivity", "Product ID: ${product.productID}, ${product.imageLink} ")
+                Log.d("MainActivity", "Product ID: ${product.productID},  ${product.brand}, ${product.type}, ${product.imageLink} ")
             }
         }
     }

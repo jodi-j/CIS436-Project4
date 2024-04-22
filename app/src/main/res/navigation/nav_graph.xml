@@ -12,10 +12,21 @@
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.example.cis436_project4.ProductsFragment"
-        android:label="ProductsFragment" />
+        android:label="ProductsFragment" >
+
+        <!-- Define the action to navigate to the Product Details fragment -->
+        <action
+            android:id="@+id/action_productsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.cis436_project4.ProfileFragment"
         android:label="ProfileFragment" />
+
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.cis436_project4.ProductDetailsFragment"
+        android:label="Product Details" />
 </navigation>

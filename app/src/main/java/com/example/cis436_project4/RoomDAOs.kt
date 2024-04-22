@@ -112,7 +112,7 @@ interface UserCollectionDao {
     @Insert
     fun insert(userCollection: UserCollection)
 
-    // INSERT a product into user's bag
+    // INSERT a product into user's collection
     @Insert
     fun insertProductIntoUserBag(userCollection: UserCollection)
 
