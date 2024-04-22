@@ -9,15 +9,156 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/tvProfileLabel"
+        android:id="@+id/tvProfileUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Fragment 3: Profile"
+        android:text="User Name"
         android:textAlignment="center"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Prefrences"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileUsername"
+        app:layout_constraintVertical_bias="0.037" />
+
+    <TextView
+        android:id="@+id/tvPrefrences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Your Prefrences"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileUsername" />
+
+    <ScrollView
+        android:layout_width="413dp"
+        android:layout_height="530dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrefrences">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProducts2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Products"
+                android:textSize="24sp"
+                tools:text="Products" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="149dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpLipstick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lipstick" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpEyeshadow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="eyeshadow" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpFoundation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="foundation" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpEyeliner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="eyeliner" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cplipgloss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lipgloss" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpBlush"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="blush" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpBronzer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bronzer" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpMascara"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mascara" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/tvBrands2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Brands"
+                android:textSize="24sp"
+                tools:text="Brands" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpMaybelline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="maybelline" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpSephora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sephora" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpClinique"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clinique" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cpNyx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nyx" />
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
