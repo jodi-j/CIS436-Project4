@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/tvprodDesc"
+    android:id="@+id/fullLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,14 +11,14 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
-        android:layout_height="624dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="480dp"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingBottom="10dp">
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/tvProdname"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:text="Product name"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -43,14 +43,14 @@
             <TextView
                 android:id="@+id/tvBrandname"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
+                android:layout_height="wrap_content"
                 android:text="Brand"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvProdDesc"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
+                android:layout_height="wrap_content"
                 android:text="Description"
                 android:textSize="20sp" />
 
@@ -59,22 +59,22 @@
 
     <!-- Nested LinearLayout for horizontal button layout -->
     <LinearLayout
-        android:layout_width="393dp"
-        android:layout_height="98dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonDislike"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:backgroundTint="#A32B2B"
             android:text="Dislike" />
 
         <Button
             android:id="@+id/buttonLike"
             android:layout_width="wrap_content"
-            android:layout_height="98dp"
+            android:layout_height="71dp"
             android:layout_marginRight="8dp"
             android:backgroundTint="#C961B665"
             android:text="Like" />
