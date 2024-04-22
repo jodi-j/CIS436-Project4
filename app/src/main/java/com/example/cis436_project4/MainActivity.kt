@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 // Insert product into database
                 insertProductIntoDatabase(productInfo)
-                fetchDataFromDatabase()
+                //fetchDataFromDatabase()
             }
         } catch (e: Exception) {
             // Handle parsing errors or other exceptions
