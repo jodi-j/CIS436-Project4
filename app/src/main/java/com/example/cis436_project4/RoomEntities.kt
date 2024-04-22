@@ -24,7 +24,7 @@ data class Product(
 
 @Entity
 data class Preference(
-    @PrimaryKey val preferenceID : String,
+    @PrimaryKey val preferenceID : Int,
     val type : String,
     val value : String
 )

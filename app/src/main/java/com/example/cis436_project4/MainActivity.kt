@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController: NavController
-    private var productInfoList: MutableList<Product> = ArrayList()
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,9 +103,18 @@ class MainActivity : AppCompatActivity() {
                     // TODO: handling for the tags
                 )
                 // Insert product into database
-                insertProductIntoDatabase(productInfo)
+                insertProduct(productInfo)
+
+                // Print all data in Products table into log
                 //fetchDataFromDatabase()
             }
+
+            // Insert default customer into database
+            insertUser()
+
+            // Insert products into user collection
+            insertIntoCollection()
+
         } catch (e: Exception) {
             // Handle parsing errors or other exceptions
             Log.e("MainActivity", "Error parsing API response: ${e.message}")
@@ -115,12 +123,70 @@ class MainActivity : AppCompatActivity() {
 
     // Insert product into Room Database
     @OptIn(DelicateCoroutinesApi::class)
-    private fun insertProductIntoDatabase(product: Product) {
+    private fun insertProduct(product: Product) {
         GlobalScope.launch(Dispatchers.IO) {
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val productDao = database.productDao()
 
             productDao.insert(product)
+        }
+    }
+
+    // Insert customer into Room Database
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun insertUser() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val database = RoomDatabaseProvider.getInstance(this@MainActivity)
+            val userDao = database.userDao()
+
+            // create and insert one user
+            val userInfo = User(
+                userID = "1",
+                username = "admin",
+                email = "admin@email.com"
+            )
+            userDao.insert(userInfo)
+
+            // log all users in user table
+            val users = userDao.getAllUsers()
+            for (user in users) {
+                Log.d("Main Activity", "User ID: ${user.userID}, ${user.username}, ${user.email}")
+            }
+        }
+    }
+
+    // Insert 3 product's into user 1's collection
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun insertIntoCollection() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val database = RoomDatabaseProvider.getInstance(this@MainActivity)
+            val userCollectionDao = database.userCollectionDao()
+
+            // Insert first product
+            val userProd1 = UserCollection(
+                userID = "1",
+                productID = "1035"
+            )
+            userCollectionDao.insert(userProd1)
+
+            // Insert second product
+            val userProd2 = UserCollection(
+                userID = "1",
+                productID = "1041"
+            )
+            userCollectionDao.insert(userProd2)
+
+            // Insert third product
+            val userProd3 = UserCollection(
+                userID = "1",
+                productID = "1047"
+            )
+            userCollectionDao.insert(userProd3)
+
+            val collection = userCollectionDao.getUserCollection("1")
+            for (product in collection) {
+                Log.d("Main Activity", "User ID: ${product.userID}, ${product.productID}")
+            }
         }
     }
 
@@ -130,7 +196,6 @@ class MainActivity : AppCompatActivity() {
         val productDao = database.productDao()
         return productDao.getAllProducts().isEmpty()
     }
-
 
     //Fetch data from the database
     @OptIn(DelicateCoroutinesApi::class)

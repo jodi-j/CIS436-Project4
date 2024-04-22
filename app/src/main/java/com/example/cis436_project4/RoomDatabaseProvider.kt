@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [User::class, Product::class, Preference::class, UserPreference::class, ProductPreference::class, UserCollection::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, Product::class, Preference::class, UserPreference::class, ProductPreference::class, UserCollection::class], version = 4, exportSchema = false)
 abstract class RoomDatabaseProvider : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun productDao(): ProductDao
@@ -16,12 +16,13 @@ abstract class RoomDatabaseProvider : RoomDatabase() {
 
     // method to delete all tables
     override fun clearAllTables() {
-        // Execute a transaction to delete all data from all tables
         runInTransaction {
-            // Call the DAO methods to delete all data from each table
             productDao().deleteAll()
-            // Add more DAO methods to delete data from other tables if needed
-            // e.g., userDao().deleteAll()
+            userDao().deleteAll()
+            preferenceDao().deleteAll()
+            productPreferenceDao().deleteAll()
+            userPreferenceDao().deleteAll()
+            userCollectionDao().deleteAll()
         }
     }
 

@@ -12,6 +12,9 @@ interface UserDao {
 
     @Insert
     fun insert(user: User)
+
+    @Query("DELETE FROM User")
+    fun deleteAll()
 }
 
 @Dao
@@ -25,7 +28,7 @@ interface ProductDao {
             "FROM Product p " +
             "JOIN UserCollection uc ON p.productID = uc.productID " +
             "WHERE uc.userID = :userId")
-    fun getProductsInUserBag(userId: Int): List<Product>
+    fun getProductsInUserBag(userId: String): List<Product>
 
     // SELECT all products based on user's preferences
     @Query("SELECT DISTINCT p.productID, p.name, p.brand " +
@@ -34,7 +37,7 @@ interface ProductDao {
             "JOIN Preference pref ON pp.preferenceID = pref.preferenceID " +
             "JOIN UserPreference up ON pref.preferenceID = up.preferenceID " +
             "WHERE up.userID = :userId")
-    fun getProductsBasedOnUserPreferences(userId: Int): List<Product>
+    fun getProductsBasedOnUserPreferences(userId: String): List<Product>
 
     @Insert
     fun insert(product: Product)
@@ -55,10 +58,13 @@ interface PreferenceDao {
             "FROM Preference p " +
             "JOIN UserPreference up ON p.preferenceID = up.preferenceID " +
             "WHERE up.userID = :userId")
-    fun getUserPreferences(userId: Int): List<Preference>
+    fun getUserPreferences(userId: String): List<Preference>
 
     @Insert
     fun insert(preference: Preference)
+
+    @Query("DELETE FROM Preference")
+    fun deleteAll()
 }
 
 
@@ -66,7 +72,7 @@ interface PreferenceDao {
 interface UserPreferenceDao {
     // SELECT all of a user's preferences from UserPreference table
     @Query("SELECT * FROM UserPreference WHERE userID = :userId")
-    fun getUserPreferences(userId: Int): List<UserPreference>
+    fun getUserPreferences(userId: String): List<UserPreference>
 
     @Insert
     fun insert(userPreference: UserPreference)
@@ -77,7 +83,10 @@ interface UserPreferenceDao {
 
     // DELETE preference from user's preferences
     @Query("DELETE FROM UserPreference WHERE userID = :userId AND preferenceID = :preferenceId")
-    fun deleteUserPreference(userId: Int, preferenceId: Int)
+    fun deleteUserPreference(userId: String, preferenceId: String)
+
+    @Query("DELETE FROM UserPreference")
+    fun deleteAll()
 }
 
 
@@ -85,17 +94,20 @@ interface UserPreferenceDao {
 interface ProductPreferenceDao {
     // SELECT all of the product preferences for a specific product
     @Query("SELECT * FROM ProductPreference WHERE productID = :productId")
-    fun getProductPreferences(productId: Int): List<ProductPreference>
+    fun getProductPreferences(productId: String): List<ProductPreference>
 
     @Insert
     fun insert(productPreference: ProductPreference)
+
+    @Query("DELETE FROM ProductPreference")
+    fun deleteAll()
 }
 
 @Dao
 interface UserCollectionDao {
     // SELECT all of the products in a user's collection
     @Query("SELECT * FROM UserCollection WHERE userID = :userId")
-    fun getUserCollection(userId: Int): List<UserCollection>
+    fun getUserCollection(userId: String): List<UserCollection>
 
     @Insert
     fun insert(userCollection: UserCollection)
@@ -103,4 +115,7 @@ interface UserCollectionDao {
     // INSERT a product into user's bag
     @Insert
     fun insertProductIntoUserBag(userCollection: UserCollection)
+
+    @Query("DELETE FROM UserCollection")
+    fun deleteAll()
 }
