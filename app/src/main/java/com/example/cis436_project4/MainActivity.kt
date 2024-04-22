@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     // Call getProductData when activity starts if database is empty
         GlobalScope.launch(Dispatchers.IO) {
+            //ONLY uncomment if you want to clear entire database and repopulate from scratch
             //RoomDatabaseProvider.getInstance(this@MainActivity).clearAllTables()
+
             if (isDatabaseEmpty()) {
                 getProductData()
             }
@@ -165,21 +167,21 @@ class MainActivity : AppCompatActivity() {
             // Insert first product
             val userProd1 = UserCollection(
                 userID = "1",
-                productID = "1035"
+                productID = "987"
             )
             userCollectionDao.insert(userProd1)
 
             // Insert second product
             val userProd2 = UserCollection(
                 userID = "1",
-                productID = "1041"
+                productID = "986"
             )
             userCollectionDao.insert(userProd2)
 
             // Insert third product
             val userProd3 = UserCollection(
                 userID = "1",
-                productID = "1047"
+                productID = "985"
             )
             userCollectionDao.insert(userProd3)
 

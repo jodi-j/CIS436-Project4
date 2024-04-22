@@ -24,7 +24,7 @@ interface ProductDao {
     fun getAllProducts(): List<Product>
 
     // SELECT all products in user's collection
-    @Query("SELECT p.productID, p.name, p.brand " +
+    @Query("SELECT * " +
             "FROM Product p " +
             "JOIN UserCollection uc ON p.productID = uc.productID " +
             "WHERE uc.userID = :userId")
