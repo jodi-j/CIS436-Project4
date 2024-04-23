@@ -3,6 +3,7 @@ package com.example.cis436_project4
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ import java.util.Locale
 class ProductsFragment : Fragment() {
     private lateinit var searchBar: SearchBar
     private lateinit var searchView: SearchView
+    private lateinit var linearLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +41,10 @@ class ProductsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_products, container, false)
-        val linearLayout: LinearLayout = rootView.findViewById(R.id.linearLayout)
+        linearLayout = rootView.findViewById(R.id.linearLayout)
         searchBar = rootView.findViewById(R.id.search_bar)
         searchView = rootView.findViewById(R.id.search_view)
 
-        /*searchView
-            .editText
-            .setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-                searchBar.setText(searchView.text)
-                searchView.hide()
-                false
-            }*/
 
         lifecycleScope.launch {
             try {
@@ -135,5 +130,4 @@ class ProductsFragment : Fragment() {
 
         return rootView
     }
-
 }
