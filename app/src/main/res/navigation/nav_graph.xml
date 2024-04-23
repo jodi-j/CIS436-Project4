@@ -28,8 +28,17 @@
         android:id="@+id/action_productsFragment_to_productDetailsFragment"
         app:destination="@id/productDetailsFragment" />
 
+    <action
+        android:id="@+id/action_productDetailsFragment_to_webViewFragment"
+        app:destination="@id/websiteFragment" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.cis436_project4.ProfileFragment"
         android:label="ProfileFragment" />
+
+    <fragment
+        android:id="@+id/websiteFragment"
+        android:name="com.example.cis436_project4.WebsiteFragment"
+        android:label="WebsiteFragment" />
 </navigation>

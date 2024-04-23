@@ -1,5 +1,7 @@
 package com.example.cis436_project4
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -60,8 +62,16 @@ class ProductDetailsFragment : Fragment() {
                     }
                     binding.tvDescriptionDet.text = prod.description
 
-                    //TODO: add website view in order to see product link directly
-                    binding.tvPurchaseDet.text = prod.websiteLink
+                    // Direct user to website for product
+                    val btnPurchaseLink = binding.root.findViewById<Button>(R.id.btnPurchaseLink)
+                    btnPurchaseLink.setOnClickListener {
+                        // Handle button click
+                        val url = prod.websiteLink
+                        val bundle = Bundle().apply {
+                            putString("url", url)
+                        }
+                        findNavController().navigate(R.id.action_productDetailsFragment_to_webViewFragment, bundle)
+                    }
 
                     if (prod.tags == "[]") {
                         binding.tvTempTags.text = "No tags for this product."

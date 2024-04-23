@@ -82,13 +82,16 @@
                 android:textSize="24sp"
                 />
 
-            <TextView
-                android:id="@+id/tvPurchaseDet"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btnPurchaseLink"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Purchase Link"
-                android:textSize="24sp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:text="Link to Product"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="24sp" />
 
         </LinearLayout>
     </ScrollView>
