@@ -27,6 +27,7 @@ import java.util.Locale
 class ProductsFragment : Fragment() {
     private lateinit var searchBar: SearchBar
     private lateinit var searchView: SearchView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,7 +38,6 @@ class ProductsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_products, container, false)
         val rootView = inflater.inflate(R.layout.fragment_products, container, false)
         val linearLayout: LinearLayout = rootView.findViewById(R.id.linearLayout)
         searchBar = rootView.findViewById(R.id.search_bar)
@@ -60,7 +60,7 @@ class ProductsFragment : Fragment() {
                 }
 
                 for (product in products) {
-                    Log.d("ProductFragment", "${product.productID}, ${product.brand}, ${product.name}")
+                    //Log.d("ProductFragment", "${product.productID}, ${product.brand}, ${product.name}")
 
                     val cardView = layoutInflater.inflate(R.layout.product_card, null) as CardView
                     val productNameTextView = cardView.findViewById<TextView>(R.id.tvProduct)
@@ -75,6 +75,7 @@ class ProductsFragment : Fragment() {
                         ) else it.toString()
                     }
 
+                    // Set image from image link
                     val glideUrl = GlideUrl(
                         product.imageLink, LazyHeaders.Builder()
                             .addHeader(
@@ -83,7 +84,6 @@ class ProductsFragment : Fragment() {
                             )
                             .build()
                     )
-
                     val productImage = cardView.findViewById<ImageView>(R.id.imageViewProduct)
                     Glide.with(requireContext())
                         .load(glideUrl)
@@ -93,8 +93,30 @@ class ProductsFragment : Fragment() {
 
                     // Navigate to the ProductDetails Fragment
                     btnDetails.setOnClickListener {
-                        findNavController().navigate(R.id.action_productsFragment_to_productDetailsFragment)
+                        //val action = ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(productId = product.productID)
+                        //findNavController().navigate(R.id.action_productsFragment_to_productDetailsFragment)
+                        //findNavController().navigate(action)
+
+                        val bundle = Bundle()
+                        bundle.putString("productId", product.productID)
+                        findNavController().navigate(
+                            R.id.action_productsFragment_to_productDetailsFragment,
+                            bundle
+                        )
                     }
+
+                    // Add margins to the card view
+                    val layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    val margin = resources.getDimensionPixelSize(R.dimen.card_margin)
+                    layoutParams.setMargins(margin, margin, margin, margin)
+                    cardView.layoutParams = layoutParams
+
+                    // Add margin to the bottom of the card view
+                    layoutParams.bottomMargin = resources.getDimensionPixelSize(R.dimen.card_bottom_margin)
+                    cardView.layoutParams = layoutParams
 
                     // Check if cardView already has a parent
                     val parent = cardView.parent

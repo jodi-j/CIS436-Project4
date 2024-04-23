@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     tools:context=".ProductDetailsFragment">
 
     <ScrollView
@@ -37,57 +38,58 @@
                 android:layout_height="wrap_content"
                 android:text="Product Name"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
             <TextView
                 android:id="@+id/tvBrandDet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Brand"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvDescriptionDet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tvPurchaseDet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Purchase Link"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/tvTagsDet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tags:"
-                android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textAlignment="viewStart"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cgTags"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
             </com.google.android.material.chip.ChipGroup>
 
             <TextView
-                android:id="@+id/tvRatingDet"
+                android:id="@+id/tvTempTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Rating: "
-                android:textAlignment="center"
-                android:textSize="24sp" />
+                android:text="[Insert Tags Here]"
+                android:textSize="24sp"
+                />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
+            <TextView
+                android:id="@+id/tvPurchaseDet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numStars="5" />
+                android:text="Purchase Link"
+                android:textSize="24sp"
+                android:layout_marginTop="8dp"/>
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

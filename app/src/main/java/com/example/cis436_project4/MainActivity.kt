@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Insert 3 product's into user 1's collection
+    // Insert 4 product's into user 1's collection
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertIntoCollection() {
         GlobalScope.launch(Dispatchers.IO) {
@@ -186,6 +186,12 @@ class MainActivity : AppCompatActivity() {
             )
             userCollectionDao.insert(userProd3)
 
+            val userProd4 = UserCollection(
+                userID = "1",
+                productID = "1032"
+            )
+            userCollectionDao.insert(userProd4)
+
             val collection = userCollectionDao.getUserCollection("1")
             for (product in collection) {
                 Log.d("Main Activity", "User ID: ${product.userID}, ${product.productID}")
@@ -212,7 +218,7 @@ class MainActivity : AppCompatActivity() {
 
             // Log the fetched products
             for (product in products) {
-                Log.d("MainActivity", "Product ID: ${product.productID},  ${product.brand}, ${product.type}, ${product.imageLink} ")
+                Log.d("MainActivity", "Product ID: ${product.productID},  ${product.brand}, ${product.type}, ${product.tags} ")
             }
         }
     }

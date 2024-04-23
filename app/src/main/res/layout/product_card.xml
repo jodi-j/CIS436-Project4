@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp">
+    app:cardElevation="8dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
-                android:textAppearance="?attr/textAppearanceTitleMedium" />
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textSize="24sp" />
 
             <!-- Brand Name -->
             <TextView
@@ -44,7 +45,8 @@
                 android:layout_marginTop="8dp"
                 android:text="Brand Name"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="22sp" />
 
             <!-- Nested LinearLayout for Details Button -->
             <LinearLayout
@@ -57,7 +59,8 @@
                     android:id="@+id/btnDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Details" />
+                    android:text="Details"
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </LinearLayout>

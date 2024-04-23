@@ -19,6 +19,10 @@ interface UserDao {
 
 @Dao
 interface ProductDao {
+    // SELECT one product
+    @Query("SELECT * FROM Product p WHERE p.productID = :productId")
+    fun getOneProduct(productId: String): List<Product>
+
     // SELECT all from Product table
     @Query("SELECT * FROM Product")
     fun getAllProducts(): List<Product>
