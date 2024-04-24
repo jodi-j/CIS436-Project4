@@ -48,7 +48,7 @@ class SwipingFragment : Fragment() {
         buttonLike = rootView.findViewById(R.id.buttonLike)
         buttonDislike = rootView.findViewById(R.id.buttonDislike)
 
-        loadProducts()  // Initialize and load all products
+        loadProductsBasedOnPref()  // Initialize and load all products based on user preferences
 
         buttonLike.setOnClickListener {
             likeProduct()
@@ -61,13 +61,19 @@ class SwipingFragment : Fragment() {
         return rootView
     }
 
-    private fun loadProducts() {
+    private fun loadProductsBasedOnPref() {
         lifecycleScope.launch {
+            // Assuming user ID is "1"
             products = withContext(Dispatchers.IO) {
-                RoomDatabaseProvider.getInstance(requireContext()).productDao().getAllProducts()
+                //using userid 1
+                RoomDatabaseProvider.getInstance(requireContext()).productDao().getProductsBasedOnUserPreferences("1")
             }
             if (products.isNotEmpty()) {
                 updateUI(products[currentIndex])
+            }
+            else{
+
+                Log.e("SwipingFragment", "Debug msg: Product List empty from user pref.")
             }
         }
     }
@@ -88,7 +94,8 @@ class SwipingFragment : Fragment() {
             val currentProduct = products[currentIndex]
             lifecycleScope.launch(Dispatchers.IO) {
                 try {
-                    val result = RoomDatabaseProvider.getInstance(requireContext()).userCollectionDao().insertProductIntoUserBag(UserCollection(userID = "1", productID = currentProduct.productID))
+                    val result = RoomDatabaseProvider.getInstance(requireContext()).userCollectionDao()
+                        .insertProductIntoUserBag(UserCollection(userID = "1", productID = currentProduct.productID))
                     if (result.equals(-1L)) { // -1 means insertion was ignored due to conflict
                         Log.d("SwipingFragment", "Product already in the bag")
                     }
@@ -97,6 +104,7 @@ class SwipingFragment : Fragment() {
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
+                        //debug messages!!
                         Log.e("SwipingFragment", "Error inserting product into bag: ${e.message}")
                         Log.d("SwipingFragment", "Here is the productID: ${currentProduct.productID}")
                     }

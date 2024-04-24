@@ -68,6 +68,10 @@ interface PreferenceDao {
     @Query("SELECT * FROM Preference WHERE type = :type AND value = :value")
     fun getPreference(type: String, value: String): List<Preference>
 
+    //Select preference id by type and value (not list)
+    @Query("SELECT preferenceID FROM Preference WHERE type = :type AND value = :value")
+    fun getPreferenceIdByTypeAndValue(type: String, value: String): Int?
+
     // SELECT a preference ID by value
     @Query("SELECT preferenceID FROM Preference WHERE value = :value")
     fun getPrefID(value: String): Int?
@@ -115,6 +119,8 @@ interface ProductPreferenceDao {
     // SELECT all of the product preferences for a specific product
     @Query("SELECT * FROM ProductPreference WHERE productID = :productId")
     fun getProductPreferences(productId: String): List<ProductPreference>
+
+
 
     @Insert
     fun insert(productPreference: ProductPreference)
