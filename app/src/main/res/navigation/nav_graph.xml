@@ -23,14 +23,20 @@
             app:argType="string" />
     </fragment>
 
-    <!-- Action to navigate to the Product Details fragment -->
+    <!-- Navigate from Products to ProductDetails -->
     <action
         android:id="@+id/action_productsFragment_to_productDetailsFragment"
         app:destination="@id/productDetailsFragment" />
 
+
     <action
         android:id="@+id/action_productDetailsFragment_to_webViewFragment"
         app:destination="@id/websiteFragment" />
+
+    <fragment
+        android:id="@+id/websiteFragment"
+        android:name="com.example.cis436_project4.WebsiteFragment"
+        android:label="WebsiteFragment" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -38,7 +44,11 @@
         android:label="ProfileFragment" />
 
     <fragment
-        android:id="@+id/websiteFragment"
-        android:name="com.example.cis436_project4.WebsiteFragment"
-        android:label="WebsiteFragment" />
+        android:id="@+id/updatePreferenceFragment"
+        android:name="com.example.cis436_project4.UpdatePreferenceFragment"
+        android:label="UpdatePreferenceFragment" />
+
+    <action
+        android:id="@+id/action_profileFragment_to_updatePreferenceFragment"
+        app:destination="@id/updatePreferenceFragment" />
 </navigation>

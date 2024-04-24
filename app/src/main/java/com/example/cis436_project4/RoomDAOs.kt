@@ -35,7 +35,7 @@ interface ProductDao {
     fun getProductsInUserBag(userId: String): List<Product>
 
     // SELECT all products based on user's preferences
-    @Query("SELECT DISTINCT p.productID, p.name, p.brand " +
+    @Query("SELECT DISTINCT * " +
             "FROM Product p " +
             "JOIN ProductPreference pp ON p.productID = pp.productID " +
             "JOIN Preference pref ON pp.preferenceID = pref.preferenceID " +
@@ -64,6 +64,18 @@ interface PreferenceDao {
             "WHERE up.userID = :userId")
     fun getUserPreferences(userId: String): List<Preference>
 
+    // SELECT a preference by type and value
+    @Query("SELECT * FROM Preference WHERE type = :type AND value = :value")
+    fun getPreference(type: String, value: String): List<Preference>
+
+    // SELECT a preference ID by value
+    @Query("SELECT preferenceID FROM Preference WHERE value = :value")
+    fun getPrefID(value: String): Int?
+
+    // SELECT a preference by ID
+    @Query("SELECT * FROM preference WHERE preferenceID = :preferenceId")
+    fun getPreferenceById(preferenceId: Int): Preference
+
     @Insert
     fun insert(preference: Preference)
 
@@ -87,7 +99,7 @@ interface UserPreferenceDao {
 
     // DELETE preference from user's preferences
     @Query("DELETE FROM UserPreference WHERE userID = :userId AND preferenceID = :preferenceId")
-    fun deleteUserPreference(userId: String, preferenceId: String)
+    fun deleteUserPreference(userId: String, preferenceId: Int)
 
     @Query("DELETE FROM UserPreference")
     fun deleteAll()
@@ -96,6 +108,10 @@ interface UserPreferenceDao {
 
 @Dao
 interface ProductPreferenceDao {
+    // SELECT all from ProductPreferences
+    @Query("SELECT * FROM ProductPreference")
+    fun getAllProdPrefs(): List<ProductPreference>
+
     // SELECT all of the product preferences for a specific product
     @Query("SELECT * FROM ProductPreference WHERE productID = :productId")
     fun getProductPreferences(productId: String): List<ProductPreference>

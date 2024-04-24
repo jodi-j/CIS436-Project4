@@ -42,9 +42,6 @@ class ProductsFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_products, container, false)
         linearLayout = rootView.findViewById(R.id.linearLayout)
-        searchBar = rootView.findViewById(R.id.search_bar)
-        searchView = rootView.findViewById(R.id.search_view)
-
 
         lifecycleScope.launch {
             try {
@@ -55,8 +52,6 @@ class ProductsFragment : Fragment() {
                 }
 
                 for (product in products) {
-                    //Log.d("ProductFragment", "${product.productID}, ${product.brand}, ${product.name}")
-
                     val cardView = layoutInflater.inflate(R.layout.product_card, null) as CardView
                     val productNameTextView = cardView.findViewById<TextView>(R.id.tvProduct)
                     val productBrandTextView = cardView.findViewById<TextView>(R.id.tvBrand)
@@ -88,10 +83,6 @@ class ProductsFragment : Fragment() {
 
                     // Navigate to the ProductDetails Fragment
                     btnDetails.setOnClickListener {
-                        //val action = ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(productId = product.productID)
-                        //findNavController().navigate(R.id.action_productsFragment_to_productDetailsFragment)
-                        //findNavController().navigate(action)
-
                         val bundle = Bundle()
                         bundle.putString("productId", product.productID)
                         findNavController().navigate(
@@ -120,8 +111,6 @@ class ProductsFragment : Fragment() {
                     }
                     // Add card view to the linear layout
                     linearLayout.addView(cardView)
-
-                    //counter++
                 }
             } catch (e: Exception) {
                 Log.e("ProductsFragment", "Error fetching products", e)
