@@ -25,8 +25,8 @@ class WebsiteFragment : Fragment() {
         binding = FragmentWebsiteBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
+        // Navigate back to ProductDetails when "Back" button is clicked
         val backButton = rootView.findViewById<Button>(R.id.btnBackToProduct)
-        // Set an OnClickListener for the back button
         backButton.setOnClickListener {
             // Navigate back to the products page
             findNavController().navigateUp()
@@ -37,11 +37,10 @@ class WebsiteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Enable JavaScript (if needed)
+        // Enable JavaScript
         binding.webView.settings.javaScriptEnabled = true
 
-        // Load the URL
+        // Load the URL inside the WebView
         val url = arguments?.getString("url")
         if (url != null) {
             binding.webView.loadUrl(url)

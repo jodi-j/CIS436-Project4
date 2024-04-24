@@ -14,7 +14,7 @@ abstract class RoomDatabaseProvider : RoomDatabase() {
     abstract fun productPreferenceDao(): ProductPreferenceDao
     abstract fun userCollectionDao(): UserCollectionDao
 
-    // method to delete all tables
+    // Delete all information from tables
     override fun clearAllTables() {
         runInTransaction {
             productDao().deleteAll()

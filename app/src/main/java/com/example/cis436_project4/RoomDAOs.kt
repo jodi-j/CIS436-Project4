@@ -10,9 +10,11 @@ interface UserDao {
     @Query("SELECT * FROM User")
     fun getAllUsers(): List<User>
 
+    // INSERT a user
     @Insert
     fun insert(user: User)
 
+    // DELETE everything from table
     @Query("DELETE FROM User")
     fun deleteAll()
 }
@@ -43,9 +45,11 @@ interface ProductDao {
             "WHERE up.userID = :userId")
     fun getProductsBasedOnUserPreferences(userId: String): List<Product>
 
+    // INSERT a product
     @Insert
     fun insert(product: Product)
 
+    // DELETE everything from table
     @Query("DELETE FROM Product")
     fun deleteAll()
 }
@@ -76,9 +80,11 @@ interface PreferenceDao {
     @Query("SELECT * FROM preference WHERE preferenceID = :preferenceId")
     fun getPreferenceById(preferenceId: Int): Preference
 
+    // INSERT a preference
     @Insert
     fun insert(preference: Preference)
 
+    // DELETE everything from table
     @Query("DELETE FROM Preference")
     fun deleteAll()
 }
@@ -90,6 +96,7 @@ interface UserPreferenceDao {
     @Query("SELECT * FROM UserPreference WHERE userID = :userId")
     fun getUserPreferences(userId: String): List<UserPreference>
 
+    // INSERT a user preference
     @Insert
     fun insert(userPreference: UserPreference)
 
@@ -101,6 +108,7 @@ interface UserPreferenceDao {
     @Query("DELETE FROM UserPreference WHERE userID = :userId AND preferenceID = :preferenceId")
     fun deleteUserPreference(userId: String, preferenceId: Int)
 
+    // DELETE everything in table
     @Query("DELETE FROM UserPreference")
     fun deleteAll()
 }
@@ -116,9 +124,11 @@ interface ProductPreferenceDao {
     @Query("SELECT * FROM ProductPreference WHERE productID = :productId")
     fun getProductPreferences(productId: String): List<ProductPreference>
 
+    // INSERT a product preference
     @Insert
     fun insert(productPreference: ProductPreference)
 
+    // DELETE everything from table
     @Query("DELETE FROM ProductPreference")
     fun deleteAll()
 }
@@ -129,6 +139,7 @@ interface UserCollectionDao {
     @Query("SELECT * FROM UserCollection WHERE userID = :userId")
     fun getUserCollection(userId: String): List<UserCollection>
 
+    // INSERT into user collection
     @Insert
     fun insert(userCollection: UserCollection)
 
@@ -136,6 +147,7 @@ interface UserCollectionDao {
     @Insert
     fun insertProductIntoUserBag(userCollection: UserCollection)
 
+    // DELETE everything from table
     @Query("DELETE FROM UserCollection")
     fun deleteAll()
 }
