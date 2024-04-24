@@ -48,12 +48,23 @@
                 android:text="Brand"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tvProdDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="20sp" />
+            <ScrollView
+                android:layout_width="352dp"
+                android:layout_height="101dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvProdDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

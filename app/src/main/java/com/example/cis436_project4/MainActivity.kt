@@ -192,6 +192,8 @@ class MainActivity : AppCompatActivity() {
             )
             userCollectionDao.insert(userProd4)
 
+
+
             val collection = userCollectionDao.getUserCollection("1")
             for (product in collection) {
                 Log.d("Main Activity", "User ID: ${product.userID}, ${product.productID}")
