@@ -26,8 +26,6 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class ProductsFragment : Fragment() {
-    private lateinit var searchBar: SearchBar
-    private lateinit var searchView: SearchView
     private lateinit var linearLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,19 +43,19 @@ class ProductsFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // Retrieve product information and populate card views
+                // Access database instance and get all products from the user's collection
                 val products = withContext(Dispatchers.IO) {
                     val productDao = RoomDatabaseProvider.getInstance(requireContext()).productDao()
                     productDao.getProductsInUserBag("1")
                 }
 
+                // Iterate over each product and dynamically create a card for it
                 for (product in products) {
                     val cardView = layoutInflater.inflate(R.layout.product_card, null) as CardView
                     val productNameTextView = cardView.findViewById<TextView>(R.id.tvProduct)
                     val productBrandTextView = cardView.findViewById<TextView>(R.id.tvBrand)
                     val btnDetails = cardView.findViewById<Button>(R.id.btnDetails)
 
-                    // Set product details to views in the card
                     productNameTextView.text = product.name
                     productBrandTextView.text = product.brand.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(
@@ -81,7 +79,7 @@ class ProductsFragment : Fragment() {
                         .error(R.drawable.ic_makeupplaceholder)
                         .into(productImage)
 
-                    // Navigate to the ProductDetails Fragment
+                    // Navigate to the ProductDetails Fragment on "Details" click
                     btnDetails.setOnClickListener {
                         val bundle = Bundle()
                         bundle.putString("productId", product.productID)
@@ -113,10 +111,10 @@ class ProductsFragment : Fragment() {
                     linearLayout.addView(cardView)
                 }
             } catch (e: Exception) {
+                // Handle errors
                 Log.e("ProductsFragment", "Error fetching products", e)
             }
         }
-
         return rootView
     }
 }

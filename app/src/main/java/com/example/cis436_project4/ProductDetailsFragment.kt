@@ -43,10 +43,10 @@ class ProductDetailsFragment : Fragment() {
         // Retrieve productId from arguments
         val productId = arguments?.getString("productId")
 
-        // Query product based on productId
         lifecycleScope.launch{
             try {
                 val product = withContext(Dispatchers.IO) {
+                    // Access database instance and get one product
                     val productDao = RoomDatabaseProvider.getInstance(requireContext()).productDao()
                     productDao.getOneProduct(productId.toString())
                 }
@@ -65,7 +65,6 @@ class ProductDetailsFragment : Fragment() {
                     // Direct user to website for product
                     val btnPurchaseLink = binding.root.findViewById<Button>(R.id.btnPurchaseLink)
                     btnPurchaseLink.setOnClickListener {
-                        // Handle button click
                         val url = prod.websiteLink
                         val bundle = Bundle().apply {
                             putString("url", url)
@@ -73,9 +72,10 @@ class ProductDetailsFragment : Fragment() {
                         findNavController().navigate(R.id.action_productDetailsFragment_to_webViewFragment, bundle)
                     }
 
-                    if (prod.tags == "[]") {
+                    // Handle tags
+                    if (prod.tags == "[]") { // Tag list is empty
                         binding.tvTempTags.text = "No tags for this product."
-                    } else {
+                    } else { // Tag list is not empty
                         binding.tvTempTags.visibility = View.GONE
                         val tags =
                             prod.tags?.removeSurrounding("[", "]")?.split(",") // Remove brackets and split into a list of tags
@@ -107,10 +107,10 @@ class ProductDetailsFragment : Fragment() {
                 }
 
             } catch (e: Exception) {
+                // Handle errors accessing the product
                 Log.e("ProductDetailsFragment", "Error fetching product", e)
             }
         }
-
         return rootView
     }
 }

@@ -1,6 +1,5 @@
 package com.example.cis436_project4
 
-
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController: NavController
@@ -27,12 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         //Navigation Bar Handling
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -52,59 +48,53 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-        // Call getProductData when activity starts if database is empty
+    // Call Makeup API to access product information
         GlobalScope.launch(Dispatchers.IO) {
-            //ONLY uncomment if you want to clear entire database and repopulate from scratch
+            // ONLY UNCOMMENT LINE BELOW IF you want to clear entire database and populate it from scratch
             //RoomDatabaseProvider.getInstance(this@MainActivity).clearAllTables()
-
 
             if (isDatabaseEmpty()) {
                 getProductData()
             }
         }
-    }
-
+    } // end onCreate
 
     //Makeup API Interaction
     private fun getProductData() {
         val productTypes = listOf("blush", "bronzer", "eyebrow", "eyeliner", "eyeshadow",
             "foundation", "lip_liner", "lipstick", "mascara", "nail_polish")
 
-
         val queue = Volley.newRequestQueue(this)
 
-
-        //Request string response from URL
+        // Call API for each product type
         for(type in productTypes) {
             val makeupURL = "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=$type"
+            //Request string response from URL
             val stringRequest = StringRequest(
                 Request.Method.GET, makeupURL,
                 { response ->
+                    // Call populate database function to populate the database
                     populateDatabase(response)
                 },
                 { error ->
-
-
+                    // Handle errors when performing API call
                     Log.e("MainActivity", "Error: ${error.message}")
                 })
-
 
             //Add request to RequestQueue
             queue.add(stringRequest)
         }
     } //end getProductData
 
-
     // Populate database using API response
     private fun populateDatabase(response: String) {
         try {
             val productArray = JSONArray(response)
 
-
+            // Iterate over each product in the JSON response
             for (i in 0 until productArray.length()) {
                 val product: JSONObject = productArray.getJSONObject(i)
-                // Store product info in class
+                // Store product info in Product entity class
                 val productInfo = Product(
                     productID = product.getString("id"),
                     brand = product.getString("brand"),
@@ -119,90 +109,67 @@ class MainActivity : AppCompatActivity() {
                 // Insert product into database
                 insertProduct(productInfo)
             }
-
-
             // Insert default customer into database
             insertUser()
-
 
             // Insert products into user collection
             insertIntoCollection()
 
-
             // Insert all preferences into preferences
             insertPreference()
-
 
             // Insert product-preference connections into productPreferences
             insertProductPreference()
 
-
         } catch (e: Exception) {
-            // Handle parsing errors or other exceptions
+            // Handle errors when parsing API response
             Log.e("MainActivity", "Error parsing API response: ${e.message}")
         }
-    }
-
+    } // end populateDatabase
 
     // Insert product into Room Database
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertProduct(product: Product) {
         GlobalScope.launch(Dispatchers.IO) {
+            // Access database instance
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val productDao = database.productDao()
 
-
+            // INSERT product into Product table
             productDao.insert(product)
-
-
-            // log all products
-            /*val products = productDao.getAllProducts() // fetch all products from the database
-            for (prod in products) {
-                Log.d("MainActivity", "Product ID: ${prod.productID},  ${prod.brand}, ${prod.type}, ${prod.tags} ")
-            }*/
         }
-    }
-
+    } // end insertProduct
 
     // Insert customer into Room Database
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertUser() {
         GlobalScope.launch(Dispatchers.IO) {
+            // Access database instance
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val userDao = database.userDao()
 
-
-            // create and insert one user
+            // INSERT one user into User table
             val userInfo = User(
                 userID = "1",
                 username = "admin",
                 email = "admin@email.com"
             )
             userDao.insert(userInfo)
-
-
-            // log all users in user table
-            /*val users = userDao.getAllUsers()
-            for (user in users) {
-                Log.d("Main Activity", "User ID: ${user.userID}, ${user.username}, ${user.email}")
-            }*/
         }
-    }
-
+    } // end insert User
 
     // Insert 4 product's into user 1's collection in Room Database
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertIntoCollection() {
         GlobalScope.launch(Dispatchers.IO) {
+            // Access database instance
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val userCollectionDao = database.userCollectionDao()
 
-
-            // Define an array of product IDs
+            // Define array of product IDs
             val productIDs = listOf("987", "986", "985", "1032")
 
-
-            // Iterate over the product IDs and insert each product
+            // Iterate over the product IDs and INSERT each product into UserCollection table
             for (productID in productIDs) {
                 val userProd = UserCollection(
                     userID = "1",
@@ -210,25 +177,18 @@ class MainActivity : AppCompatActivity() {
                 )
                 userCollectionDao.insert(userProd)
             }
-
-
-            /*val collection = userCollectionDao.getUserCollection("1")
-            for (product in collection) {
-                Log.d("Main Activity", "User ID: ${product.userID}, ${product.productID}")
-            }*/
         }
-    }
-
+    } // end insertIntoCollection
 
     // Insert preferences into Room Database
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertPreference() {
         GlobalScope.launch(Dispatchers.IO) {
+            // Access database instance
             val database = RoomDatabaseProvider.getInstance(this@MainActivity)
             val preferenceDao = database.preferenceDao()
 
-
-            // Define lists of brands and product types
+            // Define list of brands
             val brands = listOf(
                 "almay", "alva", "anna sui", "annabelle", "benefit", "boosh", "burt's bees", "butter london",
                 "c'est moi", "cargo cosmetics", "china glaze", "clinique", "coastal classic creation", "colourpop",
@@ -240,11 +200,10 @@ class MainActivity : AppCompatActivity() {
                 "w3llpeople", "wet n wild", "zorah", "zorah biocosmetiques"
             )
 
-
+            // Define list of product types
             val productTypes = listOf(
                 "blush", "bronzer", "eyebrow", "eyeliner", "eyeshadow", "foundation", "lip_liner", "lipstick", "mascara", "nail_polish"
             )
-
 
             var prefID = 1
             // Iterate over each brand and add to preference table
@@ -264,41 +223,32 @@ class MainActivity : AppCompatActivity() {
                     type = "product_type",
                     value = product
                 )
-               // preferenceDao.insert(preference)
+                preferenceDao.insert(preference)
                 prefID++
             }
-
-
-            //Log all preferences
-            /*val preferences = preferenceDao.getAllPreferences()
-            for (preference in preferences) {
-                Log.d("MainActivity", "${preference.preferenceID}, ${preference.type}, ${preference.value}")
-            }*/
-
-
         }
-    }
-
+    } // end insertPreference
 
     // Insert product-preference relationship into productPreference
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertProductPreference() {
         GlobalScope.launch(Dispatchers.IO) {
+            // Access database instance
             val productDao = RoomDatabaseProvider.getInstance(this@MainActivity).productDao()
             val productPreferenceDao =
                 RoomDatabaseProvider.getInstance(this@MainActivity).productPreferenceDao()
             val preferenceDao =
                 RoomDatabaseProvider.getInstance(this@MainActivity).preferenceDao()
 
-
+            // Get all products in the product table
             val products = productDao.getAllProducts()
+            // Iterate over all products in order to connect to a preference
             for (product in products) {
-                // Get preference based on brand
+                // Get preference id based on brand
                 val brandPreference = preferenceDao.getPreference("brand", product.brand)
-                // Get preference based on product type if it's not null or empty
+                // Get preference id based on product type if it's not null or empty
                 val typePreference =
                     product.type?.takeIf { it.isNotBlank() }?.let { preferenceDao.getPreference("product_type", it) }
-
 
                 // Combine both preferences into a single list
                 val preferences = mutableListOf<Preference>().apply {
@@ -306,29 +256,21 @@ class MainActivity : AppCompatActivity() {
                     typePreference?.let { addAll(it) }
                 }
 
-
+                // INSERT product-preference connection into ProductPreference table
                 for (preference in preferences) {
                     val productPreference =
                         ProductPreference(product.productID, preference.preferenceID)
                     productPreferenceDao.insert(productPreference)
                 }
             }
-
-
-            // Log all product preferences
-            val prodPrefs = productPreferenceDao.getAllProdPrefs()
-            for (p in prodPrefs) {
-                Log.d("Main Activity", "PrefID: ${p.preferenceID}, ProdID: ${p.productID}")
-            }
         }
-    }
-
+    } // end insertProductPreference
 
     // Check if database is empty
     private fun isDatabaseEmpty(): Boolean {
+        // Access database
         val database = RoomDatabaseProvider.getInstance(this)
         val productDao = database.productDao()
         return productDao.getAllProducts().isEmpty()
     }
 }
-

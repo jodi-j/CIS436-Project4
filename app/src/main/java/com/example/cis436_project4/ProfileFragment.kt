@@ -56,8 +56,7 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-
-            // Navigate to UpdatePreferenceFragment
+            // Navigate to UpdatePreferenceFragment when "Update Preferences" is clicked
             val btnUpdate = rootView.findViewById<Button>(R.id.btnUpdate)
             btnUpdate.setOnClickListener{
                 findNavController().navigate(R.id.action_profileFragment_to_updatePreferenceFragment)

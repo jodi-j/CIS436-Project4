@@ -33,7 +33,6 @@ class UpdatePreferenceFragment : Fragment() {
             preferences = preferenceDao.getAllPreferences()
 
             // Fetch user preferences
-
             val userPrefs = userPreferenceDao.getUserPreferences(userId)
 
             // Update UI on the main thread
@@ -67,7 +66,6 @@ class UpdatePreferenceFragment : Fragment() {
                                 }
                             }
                         }
-
                         // Add chip to chip group
                         chipGroup.addView(chip)
                     }
@@ -100,7 +98,6 @@ class UpdatePreferenceFragment : Fragment() {
                 }
             }
         }
-
         return rootView
     }
 }
