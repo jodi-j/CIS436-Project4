@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     //Makeup API Interaction
     private fun getProductData() {
         val productTypes = listOf("blush", "bronzer", "eyebrow", "eyeliner", "eyeshadow",
-                                  "foundation", "lip_liner", "lipstick", "mascara", "nail_polish")
+            "foundation", "lip_liner", "lipstick", "mascara", "nail_polish")
 
         val queue = Volley.newRequestQueue(this)
 
