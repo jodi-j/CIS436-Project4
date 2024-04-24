@@ -26,14 +26,12 @@ class SwipingFragment : Fragment() {
     private lateinit var buttonLike: Button
     private lateinit var buttonDislike: Button
 
-    //TODO: these temp variables because user prefrences arent implemented yet
+
     //variables to retrieve products from database (put them into a list)
     private lateinit var products: List<Product>
     private var currentIndex = 0
 
-    //TODO: this is temporary arrangement to randomly select all products from database
-    //Need to get products based on user prefrence
-    //Get all products from database
+
 
 
     override fun onCreateView(
@@ -98,16 +96,24 @@ class SwipingFragment : Fragment() {
                         .insertProductIntoUserBag(UserCollection(userID = "1", productID = currentProduct.productID))
                     if (result.equals(-1L)) { // -1 means insertion was ignored due to conflict
                         Log.d("SwipingFragment", "Product already in the bag")
+
                     }
-                    withContext(Dispatchers.Main) {
-                        loadNextProduct()
-                    }
+
+
+
+
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         //debug messages!!
                         Log.e("SwipingFragment", "Error inserting product into bag: ${e.message}")
                         Log.d("SwipingFragment", "Here is the productID: ${currentProduct.productID}")
                     }
+                }
+                // Remove the liked product from the list if it was successfully added
+                products = products.filter { it.productID != currentProduct.productID }
+                //move to next product
+                withContext(Dispatchers.Main) {
+                    loadNextProduct()
                 }
             }
         }
