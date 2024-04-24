@@ -24,18 +24,17 @@ class UpdatePreferenceFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_update_preference, container, false)
-
         val preferenceDao = RoomDatabaseProvider.getInstance(requireContext()).preferenceDao()
         val userPreferenceDao = RoomDatabaseProvider.getInstance(requireContext()).userPreferenceDao()
-
         lateinit var preferences: List<Preference>
+        val userId = "1"
         // Fetch preferences from the database
         lifecycleScope.launch(Dispatchers.IO) {
-            preferences = preferenceDao.getAllPreferences() // Perform on background thread
+            preferences = preferenceDao.getAllPreferences()
 
             // Fetch user preferences
-            val userId = "1" // Replace "1" with the actual user ID
-            val userPrefs = userPreferenceDao.getUserPreferences(userId) // Perform on background thread
+
+            val userPrefs = userPreferenceDao.getUserPreferences(userId)
 
             // Update UI on the main thread
             withContext(Dispatchers.Main) {
@@ -58,6 +57,14 @@ class UpdatePreferenceFragment : Fragment() {
                                 selectedChips.add(chip)
                             } else {
                                 selectedChips.remove(chip)
+
+                                // If deselected, delete the preference from the user preference table
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    val preferenceId = preferenceDao.getPrefID(chip.text.toString())
+                                    preferenceId?.let { prefId ->
+                                        userPreferenceDao.deleteUserPreference(userId, prefId)
+                                    }
+                                }
                             }
                         }
 
@@ -70,23 +77,8 @@ class UpdatePreferenceFragment : Fragment() {
 
         // Submit Button handling
         val btnSubmitUpdates = rootView.findViewById<Button>(R.id.btnSubmitUpdates)
-        val userId = "1"
         btnSubmitUpdates.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-
-                // Delete deselected preferences from the userPreference table
-                /*val selectedPreferenceIds = selectedChips.mapNotNull { chip ->
-                    preferenceDao.getPrefID(chip.text.toString()) // Perform on background thread
-                }
-                val allPreferenceIds = preferences.map { it.preferenceID }
-                val deselectedPreferenceIds = allPreferenceIds.filterNot { selectedPreferenceIds.contains(it) }
-                for (prefId in deselectedPreferenceIds) {
-                    userPreferenceDao.deleteUserPreference(userId, prefId) // Perform on background thread
-                }
-
-                // Log deselected preference IDs
-                Log.d("UpdateFragment", "Deselected Preference IDs: $deselectedPreferenceIds")*/
-
                 // Insert selected preferences into the userPreference table; THIS WORKS FS
                 for (chip in selectedChips) {
                      val preferenceId = preferenceDao.getPrefID(chip.text.toString()) // Perform on background thread
